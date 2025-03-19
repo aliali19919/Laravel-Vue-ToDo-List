@@ -50,6 +50,7 @@ let deleteTask=(id)=>{
   axios.delete(`http://127.0.0.1:8000/api/tasks/${id}`)
   if(tasks.value.length < 0){
    count.value=0
+   window.localStorage.setItem("count",count.value)
   }else{
   count.value--
   window.localStorage.setItem("count",count.value)
@@ -66,7 +67,7 @@ let tasks =ref([])
   try{
   let response= await axios.get("http://127.0.0.1:8000/api/tasks");
   tasks.value=response.data}catch{
-    Swal.fire({text:"Error",icon:"warning"})
+  Swal.fire({text:"Error",icon:"warning"})
   }
  })
 
