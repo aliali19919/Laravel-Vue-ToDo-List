@@ -40,7 +40,7 @@ class TaskController extends Controller
      */
     public function update(UpdateTaskRequest $request, Task $task)
     {
-        //
+        Task::findOrFail($task->id)->update(["is_checked"=>$request->is_checked]);
     }
 
     /**

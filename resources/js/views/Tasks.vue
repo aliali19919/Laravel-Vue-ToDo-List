@@ -21,7 +21,7 @@
         <!-- <th>{{ task.id }}</th> -->
         <td>{{ task.task }}</td>
         <td><form  method="post">
-            <input type="checkbox">
+            <input type="checkbox" :checked="task.is_checked" @change="isChecked(task)"  >
         </form>
     </td>
 <td>
@@ -42,7 +42,17 @@ import { onMounted, ref } from 'vue';
 
 export default {
     name:"Tasks",
+
  setup(){
+
+    let isChecked =(task) => {
+        axios.put(`http://127.0.0.1:8000/api/tasks/${task.id}`,{is_checked:!task.is_checked})
+
+    }
+
+
+
+
 count.value=window.localStorage.getItem("count")
 let deleteTask=(id)=>{
   Swal.fire({title:"Are You Sure You Want To Delete The Task ⚠️",icon:"warning",showCancelButton:true}).then((res)=>{
@@ -71,7 +81,7 @@ let tasks =ref([])
   }
  })
 
- return{tasks,deleteTask,count}
+ return{tasks,deleteTask,count,isChecked}
  }
 }
 </script>
