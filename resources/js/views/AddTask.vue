@@ -57,6 +57,7 @@ let submitHandler= async()=>{
     if (res.status === 200) {
       Swal.fire({ title: "Task Created 🚀", icon: "success" });
       count.value++
+      window.localStorage.setItem("count",count.value)
       task.value = "";
       router.push({ name: "viewTasks" });
     } else {

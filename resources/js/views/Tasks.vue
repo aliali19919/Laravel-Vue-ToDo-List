@@ -2,7 +2,7 @@
 <section class="min-h-svh overflow-x-auto my-[150px]">
 
 <div class=" bg-slate-400 w-[130px]  ms-[20px] rounded-lg p-[10px] transition-all duration-200 hover:bg-slate-600" >
-   <p class="text-white font-mono  text-center ">Total Tasks: {{ count }}📝</p>
+   <p class="text-white font-mono  text-center ">Total Tasks: {{ count}}📝</p>
 </div>
 
   <table class="table table-zebra">
@@ -43,12 +43,17 @@ import { onMounted, ref } from 'vue';
 export default {
     name:"Tasks",
  setup(){
-
+count.value=window.localStorage.getItem("count")
 let deleteTask=(id)=>{
   Swal.fire({title:"Are You Sure You Want To Delete The Task ⚠️",icon:"warning",showCancelButton:true}).then((res)=>{
     if(res.isConfirmed){
   axios.delete(`http://127.0.0.1:8000/api/tasks/${id}`)
+  if(tasks.value.length < 0){
+   count.value=0
+  }else{
   count.value--
+  window.localStorage.setItem("count",count.value)
+  }
   tasks.value=tasks.value.filter((task)=>{return task.id!==id})
 
 
